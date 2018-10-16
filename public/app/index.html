@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="designEditorApp" >
+
+  <head>
+    <meta charset="utf-8">
+    <title>Library Management</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Neetish Raj">
+    <meta name="copyright" content="2018, Neetish Raj">
+
+    <link rel="stylesheet" href="app.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.22/fabric.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js" charset="utf-8"></script>
+    <script src="https://code.angularjs.org/1.7.2/angular-route.min.js" charset="utf-8"></script>
+
+    <script src="app.js" charset="utf-8"></script>
+    <script src="modules/header/header.controller.js" charset="utf-8"></script>
+    <script src="modules/footer/footer.controller.js" charset="utf-8"></script>
+    <script src="modules/editor/editor.controller.js" charset="utf-8"></script>
+    <script src="modules/signup/signup.controller.js" charset="utf-8"></script>
+    <script src="modules/userlogin/userlogin.controller.js" charset="utf-8"></script>
+    <script src="modules/adminlogin/adminlogin.controller.js" charset="utf-8"></script>
+    <script src="services/fabric.service.js" charset="utf-8"></script>
+    <script src="services/util.service.js" charset="utf-8"></script>
+    <script src="services/data.service.js" charset="utf-8"></script>
+  </head>
+
+  <body ng-controller="appController">
+
+    <header
+      ng-include="'modules/header/header.html'"
+      ng-controller="headerController">
+    </header>
+
+    <main ng-view></main>
+
+    <footer
+      ng-include="'modules/footer/footer.html'"
+      ng-controller="footerController" >
+    </footer>
+
+  </body>
+</html>

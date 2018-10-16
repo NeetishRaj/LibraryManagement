@@ -1,0 +1,221 @@
+<div
+  class="editorContainer"
+  ng-controller="editorController as editor"
+  ng-init="editor.load()">
+  <div class="imagePanel">
+    <button
+      type="button"
+      name="imageAddButton"
+      class="panelButton"
+      ng-click="editor.toggleDisplayModal('imageUploadModal')">
+      Add Images
+    </button>
+    <button
+      type="button"
+      name="imageAddButton"
+      class="panelButton"
+      ng-click="editor.toggleDisplayModal('textInputModal')">
+      Add Text
+    </button>
+    <div class="imagesContainer">
+      <p>Single click on images to add them to editor</p>
+      <p>To remove image/text from editor select them, and click Remove Selected button</p>
+     
+      <img
+        ng-src="{{image}}"
+        ng-repeat="image in editor.imageDataList"
+        draggable="false"
+        ng-click="editor.addImage($event)">
+
+    </div>
+  </div>
+
+  <div class="canvasPanel" >
+  </div>
+
+  <div class="controlPanel">
+    <button
+      type="button"
+      name="editHistory"
+      class="panelButton"
+      ng-click="editor.toggleDisplayModal('editHistoryModal')">
+      Edit History
+    </button>
+    <button
+      type="button"
+      name="editHistory"
+      class="panelButton halfButton"
+      ng-click="editor.undo()">
+      Undo
+    </button>
+    <button
+      type="button"
+      name="editHistory"
+      class="panelButton halfButton"
+      ng-click="editor.redo()">
+      Redo
+    </button>
+
+    <button
+      type="button"
+      name="imageRemoveButton"
+      class="panelButton"
+      ng-click="editor.removeObject()"
+      style="margin-top:60px;">
+      Remove Selected
+    </button>
+    <button
+      type="button"
+      name="clearEditorButton"
+      class="panelButton"
+      ng-click="editor.clearEditor()">
+      Clear Editor
+    </button>
+    <button
+      type="button"
+      name="imageRemoveButton"
+      class="panelButton"
+      ng-click="editor.layerUp()">
+      Layer Up Selected
+    </button>
+    <button
+      type="button"
+      name="imageRemoveButton"
+      class="panelButton"
+      ng-click="editor.layerDown()">
+      Layer Down Selected
+    </button>
+
+    <a id="download" download="MyTshirtDesign.png">
+      <button
+        type="button"
+        name="imageDownloadButton"
+        class="panelButton"
+        ng-click="editor.toggleDisplayModal('imageDownloadModal');"
+        style="margin-top:60px;">
+        Download Design
+      </button>
+      <button
+        type="button"
+        name="saveCurrentEditButton"
+        class="panelButton"
+        ng-click="editor.toggleDisplayModal('saveCurrentEditModal')">
+        Save Current Edit
+      </button>
+
+    </a>
+  </div>
+
+
+  <!--Image Upload Modal -->
+  <div class="modal" ng-show="editor.showImageUploadModal">
+    <div class="modal-content">
+      <span
+        class="close"
+        ng-click="editor.toggleDisplayModal('imageUploadModal')">
+        &times;
+      </span>
+      <p>Pick your Image to use for editing.</p>
+      <input
+      type="file"
+      accept="image/*"
+      return-files
+      ng-model="editor.imageList"
+      ng-change="editor.uploadImages()"><br>
+    </div>
+  </div>
+
+  <!--Text Input Modal -->
+  <div class="modal" ng-show="editor.showTextInputModal">
+    <div class="modal-content">
+      <span
+        class="close"
+        ng-click="editor.toggleDisplayModal('textInputModal')">
+        &times;
+      </span>
+      <p>Enter the text</p>
+      <textarea id="textInput" rows="8" cols="80"></textarea><br>
+      <button
+        type="button"
+        name="insertTextButton"
+        ng-click="editor.addText('textInput'); editor.toggleDisplayModal('textInputModal') ">
+        Insert Text
+      </button>
+    </div>
+  </div>
+
+  <!--Image Download Modal -->
+  <div class="modal" ng-show="editor.showImageDownloadModal">
+    <div class="modal-content">
+      <span
+        class="close"
+        ng-click="editor.toggleDisplayModal('imageDownloadModal')">
+        &times;
+      </span>
+      <p>
+        Download image as
+        <input
+          type="text"
+          name="downloadedImageName"
+          id="downloadedImageName"
+          value="MyTshirtdesign.png">
+      </p>
+      <button
+        type="button"
+        name="downloadImageButton" ng-click="editor.downloadImage('downloadedImageName'); editor.toggleDisplayModal('imageDownloadModal');">
+        Download Image
+      </button>
+    </div>
+  </div>
+
+
+  <!--Edit History Modal -->
+  <div class="modal" ng-show="editor.showEditHistoryModal">
+    <div class="modal-content" style="overflow:scroll;">
+      <span
+        class="close"
+        ng-click="editor.toggleDisplayModal('editHistoryModal')">
+        &times;
+      </span>
+      <div
+        class=""
+        ng-repeat="edit in editor.actionsArray track by $index"
+        style="text-align:center; margin-top:15px; margin-right:15px;">
+        Go to
+        <button
+          type="button"
+          name="goToEditHistoryButton"
+          ng-click="editor.goToEditHistory($index)"
+          >Edit {{$index + 1}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!--save current edit Modal -->
+  <div class="modal" ng-show="editor.showSaveCurrentEditModal">
+    <div class="modal-content">
+      <span
+        class="close"
+        ng-click="editor.toggleDisplayModal('saveCurrentEditModal')">
+        &times;
+      </span>
+      <p>
+        Save the edit History as:
+        <input
+          type="text"
+          name="saveEditNameInput"
+          ng-model="editor.currentEditName">
+      </p>
+      <button
+        type="button"
+        name="saveCurrentEditButton"
+        ng-click="editor.saveCurrentEdit();">
+        Save Current Edit
+      </button>
+    </div>
+  </div>
+
+
+</div>
