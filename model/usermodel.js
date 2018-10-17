@@ -8,9 +8,8 @@ function UserDAO(db) {
 
     this.getUser = function (email, callback) {
 
-        this.db.collection("user").findOne({
-                email
-            },
+        this.db.collection("user").findOne(
+            {email},
             function (err, result) {
                 assert.equal(err, null);
                 callback(result);

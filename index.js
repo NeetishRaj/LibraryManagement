@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
     "extended": true
 }));
 
-app.use("/home", home);
+app.use("/", home);
 
 app.listen(port, () => {
     console.log("Listening on port " + port);

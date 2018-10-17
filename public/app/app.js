@@ -23,19 +23,15 @@ designEditorApp.config([
       }).
       when('/userlogin', {
         templateUrl: 'modules/userlogin/userlogin.html',
-        controller: 'designsController'
+        controller: 'userLoginController'
       }).
       when('/adminlogin', {
         templateUrl: 'modules/adminlogin/adminlogin.html',
-        controller: 'designsController'
+        controller: 'adminLoginController'
       }).
       when('/signup', {
         templateUrl: 'modules/signup/signup.html',
-        controller: 'designsController'
-      }).
-      when('/editor', {
-        templateUrl: 'modules/editor/editor.html',
-        controller: 'editorController'
+        controller: 'signUpController'
       }).
       otherwise({
         redirectTo: '/home'

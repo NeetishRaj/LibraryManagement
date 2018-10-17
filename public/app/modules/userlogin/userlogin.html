@@ -1,19 +1,21 @@
-<div>
-    <form action="/userlogin" style="border:1px solid #ccc">
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required><br>
-    
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required><br>
-      
-        <div class="clearfix">
-            <button type="submit" class="userloginbtn">Log In</button>
+<div ng-controller="userLoginController as userlogin" style="text-align: center">
+
+    <form novalidate class="simple-form">
+        <div class="container">
+            <h1>User Log In</h1>
+            <p>Please enter your email and password to Login.</p>
+            <hr>
+
+            <label>E-mail: <input type="email" ng-model="userlogin.user.email" /></label><br />
+            <label>Password: <input type="password" ng-model="userlogin.user.password" /></label><br />
+
+            <input type="submit" ng-click="userlogin.logIn()" value="Sign Up" />
         </div>
-        
     </form>
-</div>
 
-<div class="userdashboard">
-    <h1>User Dashboard</h1>
 
+    <div class="userdashboard">
+        <h1>User Dashboard</h1>
+
+    </div>
 </div>

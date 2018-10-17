@@ -5,6 +5,7 @@
  */
 
 // Dependencies
+const express = require('express');
 const router = require('express').Router();
 const UserDAO = require('../model/usermodel.js');
 const BookDAO = require('../model/bookmodel.js');
@@ -25,9 +26,18 @@ MongoClient.connect(dbUrl, {"useNewUrlParser": true}, function(err, client){
     const bookDb = new BookDAO(db);
   
 
-    // Handling GET requests
-    router.get("/", (req, res) => {
-        res.end("User detected");
+    // Handling GET requests    
+    router.post("/usersignup", (req, res) => {
+        console.log("Adding new user to Database");
+        
+        userDb.addUser(req.body, function(addStatus){
+            if (addStatus){
+                console.log("Successfully added to DB");
+                res.send("Succesfully added to Database");
+            } else {
+                res.send("Something went wrong while doing your registration");
+            }
+        });
     });
 
 

@@ -1,35 +1,29 @@
 /*eslint-disable*/
 
 /*
-* controller for the My designs view, which retrieves and shows all the Designs
-* from the database
-* @alias: "designs"
+* controller for the User sign up view
+* @alias: "signup"
 * Note that wrapping dependencies and controller function in "[]" helps to
 * preserve the code during minification
 */
-angular.module("designEditorApp").controller("designsController", [
+angular.module("designEditorApp").controller("signUpController", [
   "data",
   "$window",
   function(data, $window, $state){
 
     var self = this;
-    this.myEditsArray = [];
+    this.user = {};
 
-    this.load = function(){
-      data.getDesignList().then(
-        function(listData){
-          /*
-          * @TODO find out why there is double elemnts in data return
-          * everytime
-          */
-          // console.log(listData);
-          self.myEditsArray = listData[0];
+    this.signupUser = function(){
+      self.signupTime = $window.Date.now();
+      data.addUser(self.user).then(
+        function(responseData){
+
+          // @TODO: Redirect page to Login on suceess
+          alert(responseData);  
         }
       );
     }
 
-    this.goToEditor = function(index){
-      data.designListBuffer = $window.JSON.parse(self.myEditsArray[index].edits);
-    }
   }
 ])

@@ -30,10 +30,11 @@
       return promise2;
     };
 
-    data.insertDesign = function(editData){
-      editData = angular.toJson(editData);
-
-      return $http.post("/design/insertDesign", editData).
+    data.addUser = function(userData){
+      userData = angular.toJson(userData);
+      console.log("sending data");
+      
+      return $http.post("/usersignup", userData).
         then(function(response){
             return response.data;
         }
