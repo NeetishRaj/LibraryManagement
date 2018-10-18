@@ -16,10 +16,28 @@ function BookDAO(db) {
         );
     }
 
-    this.addBook = function (Book, callback) {
+    this.getBooks = function (callback) {
+
+        const books = [];
+        this.db.collection("book")
+            .find({})
+            .project({"_id": 0})
+            .sort({"name": 1})
+            .forEach(
+                function(doc){
+                    books.push(doc)
+                },
+                function(err){
+                    assert.equal(err, null);
+                    callback(books);
+                }
+            );
+    }
+
+    this.addBook = function (book, callback) {
 
         this.db.collection("book").insertOne(
-            Book,
+            book,
             function (err, addStatus) {
                 assert.equal(err, null);
                 callback(addStatus);
@@ -27,15 +45,16 @@ function BookDAO(db) {
         );
     };
 
-    this.updateBook = function(Book, callback){
+    this.updateBook = function(name, book, callback){
         
         this.db.collection("book").updateOne(
-            Book,
+            {name},
+            {$set: book},
             function(err, updateStatus){
                 assert.equal(err, null);
                 callback(updateStatus);
             }
-        )
+        );
     };
 
     this.removeBook = function(name, callback){
@@ -46,7 +65,7 @@ function BookDAO(db) {
                 assert.equal(err, null);
                 callback(deleteStatus);
             }
-        )
+        );
     };
 }
 

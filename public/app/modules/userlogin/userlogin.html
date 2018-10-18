@@ -1,6 +1,6 @@
 <div ng-controller="userLoginController as userlogin" style="text-align: center">
 
-    <form novalidate class="simple-form">
+    <form novalidate class="simple-form" ng-if="userlogin.showLogInForm">
         <div class="container">
             <h1>User Log In</h1>
             <p>Please enter your email and password to Login.</p>
@@ -9,13 +9,13 @@
             <label>E-mail: <input type="email" ng-model="userlogin.user.email" /></label><br />
             <label>Password: <input type="password" ng-model="userlogin.user.password" /></label><br />
 
-            <input type="submit" ng-click="userlogin.logIn()" value="Sign Up" />
+            <input type="submit" ng-click="userlogin.logIn()" value="Log In" />
         </div>
     </form>
 
 
-    <div class="userdashboard">
-        <h1>User Dashboard</h1>
-
+    <div class="userdashboard" ng-if="userlogin.showUserDashBoard">
+        <h1>User Dashboard</h1><hr>
+        <h2>Welcome {{userlogin.user.firstname}}</h2>
     </div>
 </div>

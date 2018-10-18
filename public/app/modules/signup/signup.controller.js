@@ -15,12 +15,13 @@ angular.module("designEditorApp").controller("signUpController", [
     this.user = {};
 
     this.signupUser = function(){
-      self.signupTime = $window.Date.now();
+      self.user.signupTime = $window.Date.now();
+      self.user.lastLogin = $window.Date.now();
       data.addUser(self.user).then(
         function(responseData){
 
           // @TODO: Redirect page to Login on suceess
-          alert(responseData);  
+          alert(responseData.message);  
         }
       );
     }

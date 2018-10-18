@@ -171,3 +171,8 @@ main{
     text-decoration: none;
     cursor: pointer;
 }
+
+input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
