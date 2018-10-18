@@ -17,5 +17,24 @@
     <div class="userdashboard" ng-if="userlogin.showUserDashBoard">
         <h1>User Dashboard</h1><hr>
         <h2>Welcome {{userlogin.user.firstname}}</h2>
+        
+        <div
+        class=""
+        ng-repeat="book in userlogin.books track by $index" 
+        style="border:1px solid #555; background: #dfdfdf;">
+
+            <p>
+                <span>{{$index + 1}}. {{book.name}}</span><br>
+                <span>Author: {{book.author}} </span><br>
+                <span>Publish Date: {{book.publishDate}} </span><br>
+                <span>Quantity Available: {{book.count}} </span><br>
+                <button 
+                    type="button"
+                    ng-click="userlogin.checkout($index)">
+                    Checkout
+                </button>
+            </p>
+
+         </div>
     </div>
 </div>

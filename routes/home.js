@@ -61,7 +61,7 @@ MongoClient.connect(dbUrl, {"useNewUrlParser": true}, function(err, client){
         
         userDb.getUser(req.body.email, function(userData){
             
-            if(userData && req.body.password === userData.password) {
+            if (userData && req.body.password === userData.password) {
 
                 userDb.updateUser(req.body, function(updateStatus){
                     if (updateStatus){

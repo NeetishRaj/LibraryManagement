@@ -10,85 +10,95 @@
 // IIFE to create closure and avoid polluting global space
 (function () {
 
-  var designEditorApp = angular.module("designEditorApp");
+	var designEditorApp = angular.module("designEditorApp");
 
-  function dataFactory($http) {
+	function dataFactory($http) {
 
-    if (!$http) {
-      console.log("cant access angular's http service");
-      return null;
-    }
+		if (!$http) {
+			console.log("cant access angular's http service");
+			return null;
+		}
 
-    var data = {};
+		var data = {};
 
-    data.getDesign = function (id) {
-      var promise1 = $http.get("/design/getDesign/" + id);
-      var promise2 = promise1.then(function (response) {
-        return response.data;
-      });
+		data.getDesign = function (id) {
+			var promise1 = $http.get("/design/getDesign/" + id);
+			var promise2 = promise1.then(function (response) {
+				return response.data;
+			});
 
-      return promise2;
-    };
+			return promise2;
+		};
 
-    data.addUser = function (userData) {
-      userData = angular.toJson(userData);
-      console.log("sending data");
+		data.addUser = function (userData) {
+			userData = angular.toJson(userData);
+			console.log("sending data");
 
-      return $http.post("/usersignup", userData).
-      then(function (response) {
-        return response.data;
-      });
-    };
+			return $http.post("/usersignup", userData).
+			then(function (response) {
+				return response.data;
+			});
+		};
 
-    data.logInUser = function (userData) {
-      userData = angular.toJson(userData);
-      console.log("sending data");
+		data.logInUser = function (userData) {
+			userData = angular.toJson(userData);
+			console.log("sending data");
 
-      return $http.post("/userlogin", userData).
-      then(function (response) {
-        return response.data;
-      });
-    };
+			return $http.post("/userlogin", userData).
+			then(function (response) {
+				return response.data;
+			});
+		};
 
-    data.logInAdmin = function (queryInfo) {
-      userData = angular.toJson(queryInfo || {});
-      console.log("Fetching Users");
+		data.logInAdmin = function (queryInfo) {
+			userData = angular.toJson(queryInfo || {});
+			console.log("Fetching Users");
 
-      return $http.post("/adminlogin", queryInfo).
-      then(function (response) {
-        return response.data;
-      });
-    };
+			return $http.post("/adminlogin", queryInfo).
+			then(function (response) {
+				return response.data;
+			});
+		};
 
-    data.addBook = function (book) {
-      book = angular.toJson(book);
-      console.log("adding a book");
+		data.addBook = function (book) {
+			book = angular.toJson(book);
+			console.log("adding a book");
 
-      return $http.post("/adminlogin/book", book).
-      then(function (response) {
-        return response.data;
-      });
-    };
+			return $http.post("/adminlogin/book", book).
+			then(function (response) {
+				return response.data;
+			});
+		};
 
-    data.getBooks = function(){
-      console.log("Fetching book list");
+		data.getBooks = function () {
+			console.log("Fetching book list");
 
-      return $http.get("/adminlogin/book").
-      then(function (response) {
-        return response.data;
-      });
-    }
+			return $http.get("/adminlogin/book").
+			then(function (response) {
+				return response.data;
+			});
+		}
+
+		data.updateBook = function (bookName, newData) {
+
+			bookName = bookName.trim().split(" ").join("-");
+
+			return $http.put("/adminlogin/book/" + bookName, newData).
+			then(function (response) {
+				return response.data;
+			});
+		}
 
 
 
 
-    return data;
-  }
+		return data;
+	}
 
-  // Define dependencies for dataFactory
-  dataFactory.$inject = ['$http'];
+	// Define dependencies for dataFactory
+	dataFactory.$inject = ['$http'];
 
-  // Register factory with our main angular app
-  designEditorApp.factory('data', dataFactory);
+	// Register factory with our main angular app
+	designEditorApp.factory('data', dataFactory);
 
 })();
