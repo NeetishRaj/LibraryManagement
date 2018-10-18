@@ -31,8 +31,14 @@ angular.module("designEditorApp").controller("adminLoginController", [
                         self.users = $window.JSON.parse(responseData.users);
 
                         self.users.forEach(function (item, index, arr) {
-                            arr[index].signupTime = new $window.Date(item.signupTime).toString();
-                            arr[index].lastLogin = new $window.Date(item.lastLogin).toString();
+                            arr[index].signupTime = new $window
+                                .Date(item.signupTime)
+                                .toString()
+                                .replace("GMT+0530 (India Standard Time)","");
+                            arr[index].lastLogin = new $window
+                                .Date(item.lastLogin)
+                                .toString()
+                                .replace("GMT+0530 (India Standard Time)","");
                         });
 
                         self.toggleDashboard();
