@@ -1,83 +1,99 @@
-<div 
-    ng-controller="adminLoginController as adminlogin" 
-    style="text-align: center">
+<div ng-controller="adminLoginController as adminlogin" style="text-align: center">
 
-        <form novalidate class="simple-form" ng-if="adminlogin.showLogInForm">
-            <div class="container">
-                <h1>Admin Log In</h1>
-                <p>Please enter your email and Admin password to Login.</p>
-                <p>Note: Login credentials are email: "admin@admin.com" and Password: "admin"</p>
-                <hr>
-    
-                <label>E-mail: <input type="email" ng-model="adminlogin.info.email" /></label><br />
-                <label>Password: <input type="password" ng-model="adminlogin.info.password" /></label><br />
-    
-                <input type="submit" ng-click="adminlogin.logIn()" value="Admin Log In" />
-            </div>
-        </form>
-    
-    
-        <div class="admindashboard" ng-if="adminlogin.showAdminDashBoard">
-            <h1>Admin Dashboard</h1><hr>
+    <form novalidate class="simple-form" ng-if="adminlogin.showLogInForm">
+        <div class="container">
+            <h1>Admin Log In</h1>
+            <p>Please enter your email and Admin password to Login.</p>
+            <p>Note: Login credentials are email: "admin@admin.com" and Password: "admin"</p>
+            <hr>
 
-            <h2>List of Signed Up Users</h2>
+            <label>E-mail: <input type="email" ng-model="adminlogin.info.email" /></label><br />
+            <label>Password: <input type="password" ng-model="adminlogin.info.password" /></label><br />
 
-            <div
-                class=""
-                ng-repeat="user in adminlogin.users track by $index" 
-                style="border:1px solid #555; background: #dfdfdf;">
+            <input type="submit" ng-click="adminlogin.logIn()" value="Admin Log In" />
+        </div>
+    </form>
 
-                <p>
-                    <span>{{$index + 1}}. {{user.firstname}} </span>
-                    <span>{{user.lastname}} </span><br>
-                    <span>Email: {{user.email}} </span>
-                    <span>Phone: {{user.phone}} </span><br>
-                    <span>Address: {{user.address}} </span><br>
 
-                    <span>Sign Up Date: {{user.signupTime}}</span><br>
-                    <span>Last Login date: {{user.lastLogin}}</span>
+    <div class="admindashboard" ng-if="adminlogin.showAdminDashBoard">
+        <h1>Admin Dashboard</h1>
+        <hr>
 
-                </p>
+        <h2>List of Signed Up Users</h2>
 
-            </div>
+        <pre>Sort by = {{adminlogin.propertyName}}, reverse = {{adminlogin.reverse}}</pre>
+        <hr />
+        <button ng-click="propertyName = null; reverse = false">Set to unsorted</button>
+        <hr />
+        <table class="friends">
+            <tr>
+                <th>
+                    <button ng-click="adminlogin.sortBy('firstname')">Firstname</button>
+                    <span class="sortorder" ng-show="adminlogin.propertyName === 'firstname'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th>
+                    <button ng-click="adminlogin.sortBy('phone')">Phone</button>
+                    <span class="sortorder" ng-show="adminlogin.propertyName === 'phone'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th>
+                    <button ng-click="adminlogin.sortBy('email')">Email</button>
+                    <span class="sortorder" ng-show="adminlogin.propertyName === 'email'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th>
+                    <button ng-click="adminlogin.sortBy('signupTime')">Sign up</button>
+                    <span class="sortorder" ng-show="adminlogin.propertyName === 'signupTime'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th>
+                    <button ng-click="adminlogin.sortBy('lastLogin')">Login</button>
+                    <span class="sortorder" ng-show="adminlogin.propertyName === 'lastLogin'" ng-class="{reverse: reverse}"></span>
+                </th>
+            </tr>
+            <tr ng-repeat="user in adminlogin.users track by $index ">
+                <td>{{user.firstname}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.signupTime}}</td>
+                <td>{{user.lastLogin}}</td>
+            </tr>
+        </table>
 
-            <h2>List of Books</h2><hr>
-            <p>
-                <button type="button" ng-click="adminlogin.addBook()">Add Book</button>
-            </p>
 
-            <div
-                class="bookform"
-                ng-if="adminlogin.showBookForm"
-                style="margin:50px; border:1px solid #555;">
-                <h3>Add Book Details</h3>
-                <label>Book Name: <input type="text" ng-model="adminlogin.book.name" /></label><br />
-                <label>Author: <input type="text" ng-model="adminlogin.book.author" /></label><br />
-                <label>Publish Date: <input type="date" ng-model="adminlogin.book.publishDate" /></label><br />
-                <label>Qty Available: <input type="number" ng-model="adminlogin.book.count" /></label><br />
+        <button ng-disabled="adminlogin.currentPage == 0" ng-click="adminlogin.currentPage=adminlogin.currentPage-1">
+            Previous
+        </button>
+        {{adminlogin.currentPage + 1}}/{{adminlogin.numberOfPages()}}
+        <button ng-disabled="adminlogin.currentPage >= adminlogin.users.length/adminlogin.rowSize - 1" ng-click="adminlogin.currentPage=adminlogin.currentPage+1">
+            Next
+        </button>
 
-                <input type="submit" ng-click="adminlogin.closeBookForm()" value="Cancel" />
-                <input type="submit" ng-click="adminlogin.createBook()" value="Create Book" />
-            </div>
+        <h2>List of Books</h2>
+        <hr>
+        <p>
+            <button type="button" ng-click="adminlogin.addBook()">Add Book</button>
+        </p>
 
-            <div
-            class=""
-            ng-repeat="book in adminlogin.books track by $index" 
-            style="border:1px solid #555; background: #dfdfdf;">
+        <div class="bookform" ng-if="adminlogin.showBookForm" style="margin:50px; border:1px solid #555;">
+            <h3>Add Book Details</h3>
+            <label>Book Name: <input type="text" ng-model="adminlogin.book.name" /></label><br />
+            <label>Author: <input type="text" ng-model="adminlogin.book.author" /></label><br />
+            <label>Publish Date: <input type="date" ng-model="adminlogin.book.publishDate" /></label><br />
+            <label>Qty Available: <input type="number" ng-model="adminlogin.book.count" /></label><br />
+
+            <input type="submit" ng-click="adminlogin.closeBookForm()" value="Cancel" />
+            <input type="submit" ng-click="adminlogin.createBook()" value="Create Book" />
+        </div>
+
+        <div class="" ng-repeat="book in adminlogin.books track by $index" style="border:1px solid #555; background: #dfdfdf;">
 
             <p>
                 <span>{{$index + 1}}. {{book.name}} </span><br>
                 <span>Author: {{book.author}} </span><br>
                 <span>Publish Date: {{book.publishDate}} </span><br>
                 <span>Quantity Available: {{book.count}} </span><br>
-                <button 
-                    type="button"
-                    ng-click="adminlogin.deleteBook()">
+                <button type="button" ng-click="adminlogin.deleteBook($index)">
                     Delete Book
                 </button>
-                <button 
-                    type="button"
-                    ng-click="adminlogin.updateBook()">
+                <button type="button" ng-click="adminlogin.updateBook($index)">
                     Update Book
                 </button>
 
@@ -86,5 +102,5 @@
         </div>
 
 
-        </div>
     </div>
+</div>

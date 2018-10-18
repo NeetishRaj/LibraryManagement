@@ -87,6 +87,15 @@
 			then(function (response) {
 				return response.data;
 			});
+		};
+
+		data.deleteBook = function(bookName){
+			bookName = bookName.trim().split(" ").join("-");
+
+			return $http.delete("/adminlogin/book/" + bookName).
+			then(function (response) {
+				return response.data;
+			});
 		}
 
 

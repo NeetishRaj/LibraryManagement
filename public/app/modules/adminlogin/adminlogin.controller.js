@@ -85,13 +85,56 @@ angular.module("designEditorApp").controller("adminLoginController", [
                         if(responseData.message){
                             alert(responseData.message);
                         } else {
-                            alert("Cannot conect to server");
+                            alert("Cannot connect to server");
                         }
                     }
                 }
             );
         }
 
+        this.deleteBook = function(idx){
+            alert("Delete book " + self.books[idx].name);
+
+            data.deleteBook(self.books[idx].name).then(
+                function(responseData){
+                    if (responseData.success){
+                        alert(responseData.message);
+                        self.updateBookList();
+                    } else {
+                        if(responseData.message){
+                            alert(responseData.message);
+                        } else {
+                            alert("Cannot connect to server");
+                        }
+                    }
+                }
+            )
+        };
+
+        // Pagination elements
+        this.currentPage = 0;
+        this.rowSize = 5;
+        this.numberOfPages = function(){
+            return Math.ceil(self.users.length/self.rowSize);                
+        };
+
+        // this.sort = "firstname";
+        this.propertyName = 'firstname';
+        this.reverse = true;
+      
+        this.sortBy = function(propertyName) {
+          this.reverse = (this.propertyName === propertyName) ? !this.reverse : false;
+          this.propertyName = propertyName;
+        };
+
+
+
 
     }
-])
+]).filter('startFrom', function() {
+    return function(input, start) {
+        if (!input || !input.length) { return; }
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});

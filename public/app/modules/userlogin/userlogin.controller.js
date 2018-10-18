@@ -85,7 +85,5 @@ angular.module("designEditorApp").controller("userLoginController", [
 			}
 		}
 
-
-
 	}
 ]);

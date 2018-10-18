@@ -91,7 +91,7 @@ MongoClient.connect(dbUrl, {"useNewUrlParser": true}, function(err, client){
     router.post("/adminlogin", (req, res) => {
         console.log("Matching Admin Login Credentials");
 
-        if (1 || req.body.email === "admin@admin.com" && req.body.password === "admin") {
+        if (req.body.email === "admin@admin.com" && req.body.password === "admin") {
 
             userDb.getUsers(
                 {},
